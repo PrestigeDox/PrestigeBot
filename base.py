@@ -9,11 +9,14 @@ class Base:
 
 	@commands.command(hidden=True, aliases=['pingpong'])
 	async def ping(self, ctx):
-		emb = discord.Embed(title='Pong!', colour=0xC500FF)
+		pingtime = self.bot.latency * 1000
+		pingtimerounded = int(pingtime)
+		totalstring = str(pingtimerounded) + 'ms'
+		emb = discord.Embed(title='Pong ' + totalstring, colour=0xC500FF)
 		await ctx.send(embed=emb)
 		#emb = discord.Embed(colour=0xC500FF)
 		#emb.add_field(name='Pong!', value='Pong!')
-	
+
 
 	@commands.command(hidden=True, aliases=['servers'])
 	async def stats(self, ctx):

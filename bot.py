@@ -13,7 +13,7 @@ serverPrefix = {}
 with open('serverPrefix.json', 'r') as f:
 	serverPrefix = json.load(f)
 
-basecogs = ('base', 'admin', 'fun', 'tags', 'owner')
+basecogs = ('base', 'admin', 'fun', 'tags', 'owner', 'reminder')
 
 async def get_pre(client, message):
 	try:
