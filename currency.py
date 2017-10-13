@@ -66,7 +66,7 @@ class Currency:
 				emb.add_field(name='Next Claim For User', value=str(timefinalhours) + 'H ' + str(timefinalminutes) + 'M', inline=False)
 				await ctx.send(embed=emb)
 
-	@commands.command(hidden=True, aliases=['currentbalance'])
+	@commands.command(hidden=True, aliases=['currentbalance', 'bal'])
 	async def balance(self, ctx, accountID: discord.Member = None):
 		userinfo = {}
 		with open('userbalance.json', 'r') as f:
@@ -231,9 +231,9 @@ class Currency:
 					emb.add_field(name='Your Catch', value='\U0001f41f', inline=False)
 					emb.add_field(name='New Balance', value=str(newbalance) + ' \U0001f4b3', inline=False)
 					await ctx.send(embed=emb)
-					newcout = fish[str(ctx.user.id)]["fish"] + 1
+					newcount = fish[str(ctx.author.id)]["fish"] + 1
 					fish[str(ctx.author.id)]["fish"] = newcount
-					with open('fish.json', 'r') as f:
+					with open('fish.json', 'w') as f:
 						json.dump(fish, f)
 
 
