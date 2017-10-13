@@ -226,10 +226,11 @@ class Currency:
 			await ctx.send(embed=emb)
 		else:
 			#In progress
+			pass
 
 	@commands.command(hidden=True)
 	async def slots(self, ctx, bet: int = None):
-		if bet = None:
+		if bet == None:
 			emb = discord.Embed(colour=0xff0c00)
 			emb.add_field(name='\U0000274c Error', value='Bet is a required argument')
 			await ctx.send(embed=emb)
@@ -239,6 +240,7 @@ class Currency:
 			await ctx.send(embed=emb)
 		else:
 			#In progress
+			pass
 
 def setup(bot):
 	bot.add_cog(Currency(bot))
