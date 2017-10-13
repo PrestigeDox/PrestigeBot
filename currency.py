@@ -202,16 +202,43 @@ class Currency:
 			emb.add_field(name='New Balance', value=str(newbalance) + ' \U0001f4b3', inline=False)
 			await ctx.send(embed=emb)
 
+	@commands.group(pass_context=True, invoke_without_command=True)
+	async def fish(self, ctx):
+		emb = discord.Embed(title='\U0001f3a3 Prestige Fishing Association', colour=0xC500FF)
+		emb.add_field(name='Help', value='Help Desc', inline=False)
+		emb.add_field(name='Help', value='Help Desc', inline=False)
+		emb.add_field(name='Help', value='Help Desc', inline=False)
+		await ctx.send(embed=emb)
+
+	@fish.command(pass_context=True, aliases=[''])
+	async def catch(self, ctx):
+		do_your_subcommand()
+
+	@commands.command(hidden=True)
+	async def fish(self, ctx, bet: int = None):
+		if bet = None:
+			emb = discord.Embed(colour=0xff0c00)
+			emb.add_field(name='\U0000274c Error', value='Bet is a required argument')
+			await ctx.send(embed=emb)
+		elif bet < 1:
+			emb = discord.Embed(colour=0xff0c00)
+			emb.add_field(name='\U0000274c Error', value='Bet is required to be a positive number')
+			await ctx.send(embed=emb)
+		else:
+			#In progress
+
 	@commands.command(hidden=True)
 	async def slots(self, ctx, bet: int = None):
 		if bet = None:
 			emb = discord.Embed(colour=0xff0c00)
 			emb.add_field(name='\U0000274c Error', value='Bet is a required argument')
 			await ctx.send(embed=emb)
-		elif bet < 0:
+		elif bet < 1:
 			emb = discord.Embed(colour=0xff0c00)
 			emb.add_field(name='\U0000274c Error', value='Bet is required to be a positive number')
 			await ctx.send(embed=emb)
+		else:
+			#In progress
 
 def setup(bot):
 	bot.add_cog(Currency(bot))
