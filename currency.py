@@ -218,8 +218,7 @@ class Currency:
 			holder[str(ctx.author.id)]["balance"] = newbalance
 			with open('userbalance.json', 'w') as f:
 				json.dump(holder, f)
-			#catch = ['fish', 'tropicalfish', 'fishcake', 'blowfish', 'paperclip', 'skull']
-			catch = ['fish']
+			catch = ['fish', 'fish', 'fish', 'fish', 'fish', 'fish', 'fish', 'fish', 'tropicalfish', 'fishcake', 'fishcake', 'blowfish', 'blowfish', 'paperclip', 'paperclip', 'paperclip', 'skull', 'skull', 'skull']
 			finalcatch = random.choice(catch)
 			fish = {}
 			with open('fish.json', 'r') as f:
@@ -233,6 +232,106 @@ class Currency:
 					await ctx.send(embed=emb)
 					newcount = fish[str(ctx.author.id)]["fish"] + 1
 					fish[str(ctx.author.id)]["fish"] = newcount
+					with open('fish.json', 'w') as f:
+						json.dump(fish, f)
+				elif finalcatch == 'tropicalfish':
+					emb = discord.Embed(title='\U0001f3a3 Prestige Fishing Association', colour=0xC500FF)
+					emb.add_field(name='Your Catch', value='\U0001f420', inline=False)
+					emb.add_field(name='New Balance', value=str(newbalance) + ' \U0001f4b3', inline=False)
+					await ctx.send(embed=emb)
+					newcount = fish[str(ctx.author.id)]["tropicalfish"] + 1
+					fish[str(ctx.author.id)]["tropicalfish"] = newcount
+					with open('fish.json', 'w') as f:
+						json.dump(fish, f)
+				elif finalcatch == 'fishcake':
+					emb = discord.Embed(title='\U0001f3a3 Prestige Fishing Association', colour=0xC500FF)
+					emb.add_field(name='Your Catch', value='\U0001f365', inline=False)
+					emb.add_field(name='New Balance', value=str(newbalance) + ' \U0001f4b3', inline=False)
+					await ctx.send(embed=emb)
+					newcount = fish[str(ctx.author.id)]["fishcake"] + 1
+					fish[str(ctx.author.id)]["fishcake"] = newcount
+					with open('fish.json', 'w') as f:
+						json.dump(fish, f)
+				elif finalcatch == 'blowfish':
+					emb = discord.Embed(title='\U0001f3a3 Prestige Fishing Association', colour=0xC500FF)
+					emb.add_field(name='Your Catch', value='\U0001f421', inline=False)
+					emb.add_field(name='New Balance', value=str(newbalance) + ' \U0001f4b3', inline=False)
+					await ctx.send(embed=emb)
+					newcount = fish[str(ctx.author.id)]["blowfish"] + 1
+					fish[str(ctx.author.id)]["blowfish"] = newcount
+					with open('fish.json', 'w') as f:
+						json.dump(fish, f)
+				elif finalcatch == 'paperclip':
+					emb = discord.Embed(title='\U0001f3a3 Prestige Fishing Association', colour=0xC500FF)
+					emb.add_field(name='Your Catch', value='\U0001f4ce', inline=False)
+					emb.add_field(name='New Balance', value=str(newbalance) + ' \U0001f4b3', inline=False)
+					await ctx.send(embed=emb)
+					newcount = fish[str(ctx.author.id)]["paperclip"] + 1
+					fish[str(ctx.author.id)]["paperclip"] = newcount
+					with open('fish.json', 'w') as f:
+						json.dump(fish, f)
+				elif finalcatch == 'skull':
+					emb = discord.Embed(title='\U0001f3a3 Prestige Fishing Association', colour=0xC500FF)
+					emb.add_field(name='Your Catch', value='\U0001f480', inline=False)
+					emb.add_field(name='New Balance', value=str(newbalance) + ' \U0001f4b3', inline=False)
+					await ctx.send(embed=emb)
+					newcount = fish[str(ctx.author.id)]["skull"] + 1
+					fish[str(ctx.author.id)]["skull"] = newcount
+					with open('fish.json', 'w') as f:
+						json.dump(fish, f)
+			else:
+				if finalcatch == 'fish':
+					emb = discord.Embed(title='\U0001f3a3 Prestige Fishing Association', colour=0xC500FF)
+					emb.add_field(name='Your Catch', value='\U0001f41f', inline=False)
+					emb.add_field(name='New Balance', value=str(newbalance) + ' \U0001f4b3', inline=False)
+					await ctx.send(embed=emb)
+					newcount = fish[str(ctx.author.id)]["fish"] + 1
+					fish[str(ctx.author.id)]["fish"] = newcount
+					with open('fish.json', 'w') as f:
+						json.dump(fish, f)
+				elif finalcatch == 'tropicalfish':
+					emb = discord.Embed(title='\U0001f3a3 Prestige Fishing Association', colour=0xC500FF)
+					emb.add_field(name='Your Catch', value='\U0001f420', inline=False)
+					emb.add_field(name='New Balance', value=str(newbalance) + ' \U0001f4b3', inline=False)
+					await ctx.send(embed=emb)
+					newcount = fish[str(ctx.author.id)]["tropicalfish"] + 1
+					fish[str(ctx.author.id)]["tropicalfish"] = newcount
+					with open('fish.json', 'w') as f:
+						json.dump(fish, f)
+				elif finalcatch == 'fishcake':
+					emb = discord.Embed(title='\U0001f3a3 Prestige Fishing Association', colour=0xC500FF)
+					emb.add_field(name='Your Catch', value='\U0001f365', inline=False)
+					emb.add_field(name='New Balance', value=str(newbalance) + ' \U0001f4b3', inline=False)
+					await ctx.send(embed=emb)
+					newcount = fish[str(ctx.author.id)]["fishcake"] + 1
+					fish[str(ctx.author.id)]["fishcake"] = newcount
+					with open('fish.json', 'w') as f:
+						json.dump(fish, f)
+				elif finalcatch == 'blowfish':
+					emb = discord.Embed(title='\U0001f3a3 Prestige Fishing Association', colour=0xC500FF)
+					emb.add_field(name='Your Catch', value='\U0001f421', inline=False)
+					emb.add_field(name='New Balance', value=str(newbalance) + ' \U0001f4b3', inline=False)
+					await ctx.send(embed=emb)
+					newcount = fish[str(ctx.author.id)]["blowfish"] + 1
+					fish[str(ctx.author.id)]["blowfish"] = newcount
+					with open('fish.json', 'w') as f:
+						json.dump(fish, f)
+				elif finalcatch == 'paperclip':
+					emb = discord.Embed(title='\U0001f3a3 Prestige Fishing Association', colour=0xC500FF)
+					emb.add_field(name='Your Catch', value='\U0001f4ce', inline=False)
+					emb.add_field(name='New Balance', value=str(newbalance) + ' \U0001f4b3', inline=False)
+					await ctx.send(embed=emb)
+					newcount = fish[str(ctx.author.id)]["paperclip"] + 1
+					fish[str(ctx.author.id)]["paperclip"] = newcount
+					with open('fish.json', 'w') as f:
+						json.dump(fish, f)
+				elif finalcatch == 'skull':
+					emb = discord.Embed(title='\U0001f3a3 Prestige Fishing Association', colour=0xC500FF)
+					emb.add_field(name='Your Catch', value='\U0001f480', inline=False)
+					emb.add_field(name='New Balance', value=str(newbalance) + ' \U0001f4b3', inline=False)
+					await ctx.send(embed=emb)
+					newcount = fish[str(ctx.author.id)]["skull"] + 1
+					fish[str(ctx.author.id)]["skull"] = newcount
 					with open('fish.json', 'w') as f:
 						json.dump(fish, f)
 
