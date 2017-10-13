@@ -202,7 +202,7 @@ class Currency:
 			emb.add_field(name='New Balance', value=str(newbalance) + ' \U0001f4b3', inline=False)
 			await ctx.send(embed=emb)
 
-	@commands.group(invoke_without_command=True, pass_context=True, invoke_without_command=True)
+	@commands.group(invoke_without_command=True, pass_context=True)
 	async def fish(self, ctx):
 		emb = discord.Embed(title='\U0001f3a3 Prestige Fishing Association', colour=0xC500FF)
 		emb.add_field(name='Help', value='Help Desc', inline=False)
