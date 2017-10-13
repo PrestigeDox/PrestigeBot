@@ -12,7 +12,7 @@ async def handel_error(bot, ctx, error):
 			fmt += str(error)
 		await ctx.send(fmt)
 	elif isinstance(error, commands.errors.CommandNotFound):
-		await ctx.send(":question: Command Not Found")
+		await ctx.send(":question: Command Not Found", delete_after=10)
 
 	print(f'Ignoring exception in command {ctx.command}:', file=sys.stderr)
 	traceback.print_exception(type(error), error, error.__traceback__, file=sys.stderr)
