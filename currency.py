@@ -3,6 +3,7 @@ from discord.ext import commands
 import random
 import json
 import time
+import random
 
 class Currency:
 	def __init__(self, bot: commands.Bot):
@@ -138,18 +139,6 @@ class Currency:
 				emb.add_field(name='Create Account', value="The user doesn't have an account but can easily create one via claiming their daily reward. Simply run the command $daily (change the prefix to the relevant server prefix!")
 				await ctx.send(embed=emb)
 
-	@commands.command(hidden=True)
-	async def testing(self, ctx):
-		userinfo = {}
-		with open('userbalance.json', 'r') as f:
-			userinfo = json.load(f)
-		if str(ctx.author.id) in userinfo:
-			initialbalance = userinfo[ctx.author.id]["balance"]
-			newbalance = initialbalance + 250
-			userinfo[ctx.author.id]["balance"] = newbalance
-			userinfo[ctx.author.id]["lastclaimed"] = time.time()
-			print(time.time())
-
 	@commands.command(hidden=True, aliases=['haxor', 'haxthesystem', 'cheat', 'cheatcode', '1337leet', '1337leethaxor', '1337haxor', '1337haxorgive'])
 	@commands.is_owner()
 	async def haxorsomep(self, ctx, user: discord.Member, amount: int = None):
@@ -210,23 +199,44 @@ class Currency:
 		emb.add_field(name='Help', value='Help Desc', inline=False)
 		await ctx.send(embed=emb)
 
-	@fish.command(pass_context=True, aliases=[''])
+	@fish.command(pass_context=True, aliases=['testing'])
 	async def test(self, ctx):
-		ctx.send("This works boys")
+		await ctx.send("This works boys")
 
 	@fish.command(hidden=True)
-	async def catch(self, ctx, bet: int = None):
-		if bet == None:
+	async def catch(self, ctx):
+		holder = {}
+		with open('userbalance.json', 'r') as f:
+			holder = json.load(f)
+		balance = holder[str(ctx.author.id)]["balance"]
+		if balance < 10:
 			emb = discord.Embed(colour=0xff0c00)
-			emb.add_field(name='\U0000274c Error', value='Bet is a required argument')
-			await ctx.send(embed=emb)
-		elif bet < 1:
-			emb = discord.Embed(colour=0xff0c00)
-			emb.add_field(name='\U0000274c Error', value='Bet is required to be a positive number')
+			emb.add_field(name='\U0000274c Error', value="Balance is less than 10 \U0001f4b3")
 			await ctx.send(embed=emb)
 		else:
-			#In progress
-			pass
+			newbalance = balance - 10
+			holder[str(ctx.author.id)]["balance"] = newbalance
+			with open('userbalance.json', 'w') as f:
+				json.dump(holder, f)
+			#catch = ['fish', 'tropicalfish', 'fishcake', 'blowfish', 'paperclip', 'skull']
+			catch = ['fish']
+			finalcatch = random.choice(catch)
+			fish = {}
+			with open('fish.json', 'r') as f:
+				fish = json.load(f)
+			if str(ctx.user.id) not in fish:
+				fish[str(ctx.author.id)] = {"fish": 0, "tropicalfish": 0, "fishcake": 0, "blowfish": 0, "paperclip": 0, "skull": 0}
+				if finalcatch == 'fish':
+					emb = discord.Embed(title='\U0001f3a3 Prestige Fishing Association', colour=0xC500FF)
+					emb.add_field(name='Your Catch', value='\U0001f41f', inline=False)
+					emb.add_field(name='New Balance', value=str(newbalance) + ' \U0001f4b3', inline=False)
+					await ctx.send(embed=emb)
+					newcout = fish[str(ctx.user.id)]["fish"] + 1
+					fish[str(ctx.user.id)]["fish"] = newcount
+					with open('fish.json', 'r') as f:
+						json.dump(fish, f)
+
+
 
 	@commands.command(hidden=True)
 	async def slots(self, ctx, bet: int = None):
