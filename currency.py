@@ -202,7 +202,7 @@ class Currency:
 			emb.add_field(name='New Balance', value=str(newbalance) + ' \U0001f4b3', inline=False)
 			await ctx.send(embed=emb)
 
-	@commands.group(pass_context=True, invoke_without_command=True)
+	@commands.group(invoke_without_command=True, pass_context=True, invoke_without_command=True)
 	async def fish(self, ctx):
 		emb = discord.Embed(title='\U0001f3a3 Prestige Fishing Association', colour=0xC500FF)
 		emb.add_field(name='Help', value='Help Desc', inline=False)
@@ -211,12 +211,12 @@ class Currency:
 		await ctx.send(embed=emb)
 
 	@fish.command(pass_context=True, aliases=[''])
-	async def catch(self, ctx):
-		do_your_subcommand()
+	async def test(self, ctx):
+		ctx.send("This works boys")
 
-	@commands.command(hidden=True)
-	async def fish(self, ctx, bet: int = None):
-		if bet = None:
+	@fish.command(hidden=True)
+	async def catch(self, ctx, bet: int = None):
+		if bet == None:
 			emb = discord.Embed(colour=0xff0c00)
 			emb.add_field(name='\U0000274c Error', value='Bet is a required argument')
 			await ctx.send(embed=emb)
