@@ -224,7 +224,7 @@ class Currency:
 			fish = {}
 			with open('fish.json', 'r') as f:
 				fish = json.load(f)
-			if str(ctx.user.id) not in fish:
+			if str(ctx.author.id) not in fish:
 				fish[str(ctx.author.id)] = {"fish": 0, "tropicalfish": 0, "fishcake": 0, "blowfish": 0, "paperclip": 0, "skull": 0}
 				if finalcatch == 'fish':
 					emb = discord.Embed(title='\U0001f3a3 Prestige Fishing Association', colour=0xC500FF)
@@ -232,7 +232,7 @@ class Currency:
 					emb.add_field(name='New Balance', value=str(newbalance) + ' \U0001f4b3', inline=False)
 					await ctx.send(embed=emb)
 					newcout = fish[str(ctx.user.id)]["fish"] + 1
-					fish[str(ctx.user.id)]["fish"] = newcount
+					fish[str(ctx.author.id)]["fish"] = newcount
 					with open('fish.json', 'r') as f:
 						json.dump(fish, f)
 
