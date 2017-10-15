@@ -13,7 +13,7 @@ serverPrefix = {}
 with open('serverPrefix.json', 'r') as f:
 	serverPrefix = json.load(f)
 
-basecogs = ('base', 'admin', 'fun', 'tags', 'owner', 'reminder')
+basecogs = ('base', 'admin', 'fun', 'tags', 'owner', 'reminder', 'currency')
 
 async def get_pre(client, message):
 	try:
@@ -72,4 +72,4 @@ async def on_guild_join(nameGuild):
 	with open('tags.json', 'w') as f:
 		json.dump(holderdict, f)
 
-bot.run("TOKEN")
+bot.run("MzY2MjY4OTU0ODgyMjExODQw.DLqpsA.ePEIv4EwnGDyFWyRzJmkUaJd4JU")

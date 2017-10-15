@@ -4,6 +4,8 @@ import random
 import json
 import time
 import random
+import asyncio
+import time
 
 class Currency:
 	def __init__(self, bot: commands.Bot):
@@ -194,14 +196,9 @@ class Currency:
 	@commands.group(invoke_without_command=True, pass_context=True)
 	async def fish(self, ctx):
 		emb = discord.Embed(title='\U0001f3a3 Prestige Fishing Association', colour=0xC500FF)
-		emb.add_field(name='Help', value='Help Desc', inline=False)
-		emb.add_field(name='Help', value='Help Desc', inline=False)
-		emb.add_field(name='Help', value='Help Desc', inline=False)
+		emb.add_field(name='$fish sell', value='Look at your inventory and see what you can sell', inline=False)
+		emb.add_field(name='$fish catch', value='Spend 10 \U0001f4b3 to catch fish', inline=False)
 		await ctx.send(embed=emb)
-
-	@fish.command(pass_context=True, aliases=['testing'])
-	async def test(self, ctx):
-		await ctx.send("This works boys")
 
 	@fish.command(hidden=True)
 	async def catch(self, ctx):
@@ -335,7 +332,245 @@ class Currency:
 					with open('fish.json', 'w') as f:
 						json.dump(fish, f)
 
+	@fish.command(hidden=True, aliases=['inv', 'invent', 'supply', 'stock', 'sell'])
+	async def inventory(self, ctx, user: discord.Member = None):
+		await ctx.message.delete()
+		holder = {}
+		with open('fish.json', 'r') as f:
+			holder = json.load(f)
 
+		emote_tuple = ('\U0001f41f',
+					   '\U0001f420',
+					   '\U0001f365',
+					   '\U0001f421',
+					   '\U0001f4ce',
+					   '\U0001f480',
+					   '\U000023f9')
+
+		if user == None:
+			fish = holder[str(ctx.author.id)]["fish"]
+			tropicalfish = holder[str(ctx.author.id)]["tropicalfish"]
+			fishcake = holder[str(ctx.author.id)]["fishcake"]
+			blowfish = holder[str(ctx.author.id)]["blowfish"]
+			paperclip = holder[str(ctx.author.id)]["paperclip"]
+			skull = holder[str(ctx.author.id)]["skull"]
+			emb = discord.Embed(title='\U0001f3a3 Prestige Fishing Association', colour=0xC500FF)
+			emb.add_field(name='Amount of \U0001f41f', value=fish, inline=False)
+			emb.add_field(name='Amount of \U0001f420', value=tropicalfish, inline=False)
+			emb.add_field(name='Amount of \U0001f365', value=fishcake, inline=False)
+			emb.add_field(name='Amount of \U0001f421', value=blowfish, inline=False)
+			emb.add_field(name='Amount of \U0001f4ce', value=paperclip, inline=False)
+			emb.add_field(name='Amount of \U0001f480', value=skull, inline=False)
+			bot_message = await ctx.send(embed=emb, delete_after=300)
+			for x in emote_tuple:
+				await bot_message.add_reaction(x)
+			def check(reaction, user):
+				return user == ctx.author and reaction.emoji in emote_tuple and reaction.message.id == bot_message.id
+			while True:
+				print("LOOP")
+				try:
+					reaction, user = await self.bot.wait_for('reaction_add', check=check, timeout=300.0)
+				except asyncio.TimeoutError:
+					return await bot_message.clear_reactions()
+				balanceholder = {}
+				if reaction.emoji == '\U0001f41f':
+					print("1 Detected that emoji is fish")
+					if holder[str(ctx.author.id)]["fish"] > 0:
+						#Edit fish name above
+						myholdercounter = holder[str(ctx.author.id)]["fish"] - 1
+						print(holder[str(ctx.author.id)]["fish"])
+						print(myholdercounter)
+						print("2 -1 counter")
+						#Edit fish name above
+						holder[str(ctx.author.id)]["fish"] = myholdercounter
+						print(holder)
+						print("3 add new val to dict")
+						#Edit fish name above
+						with open('fish.json', 'w') as f:
+							json.dump(holder, f)
+						print("4 Upload new dict to JSON")
+						with open('userbalance.json', 'r') as f:
+							balanceholder = json.load(f)
+						print("5 Reading JSON balance")
+						userbalance = balanceholder[str(ctx.author.id)]["balance"]
+						userbalance = userbalance + 10
+						print("6 Adding bal to variable")
+						#Edit fish value above
+						balanceholder[str(ctx.author.id)]["balance"] = userbalance
+						with open('userbalance.json', 'w') as f:
+							json.dump(balanceholder, f)
+						print("7 New Val to JSON")
+						emb.set_field_at(0, name='Amount of \U0001f41f', value=myholdercounter, inline=False)
+						print("8 Set new embed field")
+						#Edit fish name above fish-1
+						await bot_message.edit(embed=emb)
+						print("9 Edit Embed")
+						await bot_message.remove_reaction('\U0001f41f', ctx.author)
+						print("10 Remove user reaction")
+						embp = discord.Embed(title='\U0001f3a3 Prestige Fishing Association', colour=0xFFD700)
+						embp.add_field(name='Sale', value='10 \U0001f4b3 added to your balance!')
+						await ctx.send(embed=embp, delete_after=60)
+					else:
+						embd = discord.Embed(colour=0xff0c00)
+						embd.add_field(name='\U0000274c Error', value='The value of that item in your inv is 0')
+						await ctx.send(embed=embd)
+				elif reaction.emoji == '\U0001f420':
+					if holder[str(ctx.author.id)]["tropicalfish"] > 0:
+						#Edit fish name above
+						myholdercounter = holder[str(ctx.author.id)]["tropicalfish"] - 1
+						#Edit fish name above
+						holder[str(ctx.author.id)]["tropicalfish"] = myholdercounter
+						#Edit fish name above
+						with open('fish.json', 'w') as f:
+							json.dump(holder, f)
+						with open('userbalance.json', 'r') as f:
+							balanceholder = json.load(f)
+						userbalance = balanceholder[str(ctx.author.id)]["balance"]
+						userbalance = userbalance + 25
+						#Edit fish value above
+						balanceholder[str(ctx.author.id)]["balance"] = userbalance
+						with open('userbalance.json', 'w') as f:
+							json.dump(balanceholder, f)
+						emb.set_field_at(1, name='Amount of \U0001f420', value=myholdercounter, inline=False)
+						#Edit fish name above fish-1
+						await bot_message.edit(embed=emb)
+						await bot_message.remove_reaction('\U0001f420', ctx.author)
+						embp = discord.Embed(title='\U0001f3a3 Prestige Fishing Association', colour=0xFFD700)
+						embp.add_field(name='Sale', value='10 \U0001f4b3 added to your balance!')
+						await ctx.send(embed=embp, delete_after=60)
+					else:
+						embd = discord.Embed(colour=0xff0c00)
+						embd.add_field(name='\U0000274c Error', value='The value of that item in your inv is 0')
+						await ctx.send(embed=embd)
+				elif reaction.emoji == '\U0001f365':
+					if holder[str(ctx.author.id)]["fishcake"] > 0:
+						#Edit fish name above
+						myholdercounter = holder[str(ctx.author.id)]["fishcake"] - 1
+						#Edit fish name above
+						holder[str(ctx.author.id)]["fishcake"] = myholdercounter
+						#Edit fish name above
+						with open('fish.json', 'w') as f:
+							json.dump(holder, f)
+						with open('userbalance.json', 'r') as f:
+							balanceholder = json.load(f)
+						userbalance = balanceholder[str(ctx.author.id)]["balance"]
+						userbalance = userbalance + 15
+						#Edit fish value above
+						balanceholder[str(ctx.author.id)]["balance"] = userbalance
+						with open('userbalance.json', 'w') as f:
+							json.dump(balanceholder, f)
+						emb.set_field_at(2, name='Amount of \U0001f365', value=myholdercounter, inline=False)
+						#Edit fish name above fish-1
+						await bot_message.edit(embed=emb)
+						await bot_message.remove_reaction('\U0001f365', ctx.author)
+						embp = discord.Embed(title='\U0001f3a3 Prestige Fishing Association', colour=0xFFD700)
+						embp.add_field(name='Sale', value='10 \U0001f4b3 added to your balance!')
+						await ctx.send(embed=embp, delete_after=60)
+					else:
+						embd = discord.Embed(colour=0xff0c00)
+						embd.add_field(name='\U0000274c Error', value='The value of that item in your inv is 0')
+						await ctx.send(embed=embd)
+				elif reaction.emoji == '\U0001f421':
+					if holder[str(ctx.author.id)]["blowfish"] > 0:
+						#Edit fish name above
+						myholdercounter = holder[str(ctx.author.id)]["blowfish"] - 1
+						#Edit fish name above
+						holder[str(ctx.author.id)]["blowfish"] = myholdercounter
+						#Edit fish name above
+						with open('fish.json', 'w') as f:
+							json.dump(holder, f)
+						with open('userbalance.json', 'r') as f:
+							balanceholder = json.load(f)
+						userbalance = balanceholder[str(ctx.author.id)]["balance"]
+						userbalance = userbalance + 30
+						#Edit fish value above
+						balanceholder[str(ctx.author.id)]["balance"] = userbalance
+						with open('userbalance.json', 'w') as f:
+							json.dump(balanceholder, f)
+						emb.set_field_at(3, name='Amount of \U0001f421', value=myholdercounter, inline=False)
+						#Edit fish name above fish-1
+						await bot_message.edit(embed=emb)
+						await bot_message.remove_reaction('\U0001f421', ctx.author)
+						embp = discord.Embed(title='\U0001f3a3 Prestige Fishing Association', colour=0xFFD700)
+						embp.add_field(name='Sale', value='10 \U0001f4b3 added to your balance!')
+						await ctx.send(embed=embp, delete_after=60)
+					else:
+						embd = discord.Embed(colour=0xff0c00)
+						embd.add_field(name='\U0000274c Error', value='The value of that item in your inv is 0')
+						await ctx.send(embed=embd)
+				elif reaction.emoji == '\U0001f4ce':
+					if holder[str(ctx.author.id)]["paperclip"] > 0:
+						#Edit fish name above
+						myholdercounter = holder[str(ctx.author.id)]["paperclip"] - 1
+						#Edit fish name above
+						holder[str(ctx.author.id)]["paperclip"] = myholdercounter
+						#Edit fish name above
+						with open('fish.json', 'w') as f:
+							json.dump(holder, f)
+						with open('userbalance.json', 'r') as f:
+							balanceholder = json.load(f)
+						userbalance = balanceholder[str(ctx.author.id)]["balance"]
+						userbalance = userbalance + 5
+						#Edit fish value above
+						balanceholder[str(ctx.author.id)]["balance"] = userbalance
+						with open('userbalance.json', 'w') as f:
+							json.dump(balanceholder, f)
+						emb.set_field_at(4, name='Amount of \U0001f4ce', value=myholdercounter, inline=False)
+						#Edit fish name above fish-1
+						await bot_message.edit(embed=emb)
+						await bot_message.remove_reaction('\U0001f4ce', ctx.author)
+						embp = discord.Embed(title='\U0001f3a3 Prestige Fishing Association', colour=0xFFD700)
+						embd.add_field(name='Sale', value='10 \U0001f4b3 added to your balance!')
+						await ctx.send(embed=embp, delete_after=60)
+					else:
+						embd = discord.Embed(colour=0xff0c00)
+						embp.add_field(name='\U0000274c Error', value='The value of that item in your inv is 0')
+						await ctx.send(embed=embd)
+				elif reaction.emoji == '\U0001f480':
+					if holder[str(ctx.author.id)]["skull"] > 0:
+						#Edit fish name above
+						myholdercounter = holder[str(ctx.author.id)]["skull"] - 1
+						#Edit fish name above
+						holder[str(ctx.author.id)]["skull"] = myholdercounter
+						#Edit fish name above
+						with open('fish.json', 'w') as f:
+							json.dump(holder, f)
+						with open('userbalance.json', 'r') as f:
+							balanceholder = json.load(f)
+						userbalance = balanceholder[str(ctx.author.id)]["balance"]
+						userbalance = userbalance + 5
+						#Edit fish value above
+						balanceholder[str(ctx.author.id)]["balance"] = userbalance
+						with open('userbalance.json', 'w') as f:
+							json.dump(balanceholder, f)
+						emb.set_field_at(5, name='Amount of \U0001f480', value=myholdercounter, inline=False)
+						#Edit fish name above fish-1
+						await bot_message.edit(embed=emb)
+						await bot_message.remove_reaction('\U0001f480', ctx.author)
+						embp = discord.Embed(title='\U0001f3a3 Prestige Fishing Association', colour=0xFFD700)
+						embp.add_field(name='Sale', value='10 \U0001f4b3 added to your balance!')
+						await ctx.send(embed=embp, delete_after=60)
+					else:
+						embd = discord.Embed(colour=0xff0c00)
+						embd.add_field(name='\U0000274c Error', value='The value of that item in your inv is 0')
+						await ctx.send(embed=embd)
+
+		else:
+			fish = holder[str(user.id)]["fish"]
+			tropicalfish = holder[str(user.id)]["tropicalfish"]
+			fishcake = holder[str(user.id)]["fishcake"]
+			blowfish = holder[str(user.id)]["blowfish"]
+			paperclip = holder[str(user.id)]["paperclip"]
+			skull = holder[str(user.id)]["skull"]
+			emb = discord.Embed(title='\U0001f3a3 Prestige Fishing Association', colour=0xC500FF)
+			emb.add_field(name='User', value=user, inline=False)
+			emb.add_field(name='Amount of \U0001f41f', value=fish, inline=False)
+			emb.add_field(name='Amount of \U0001f420', value=tropicalfish, inline=False)
+			emb.add_field(name='Amount of \U0001f365', value=fishcake, inline=False)
+			emb.add_field(name='Amount of \U0001f421', value=blowfish, inline=False)
+			emb.add_field(name='Amount of \U0001f4ce', value=paperclip, inline=False)
+			emb.add_field(name='Amount of \U0001f480', value=skull, inline=False)
+			await ctx.send(embed=emb)
 
 	@commands.command(hidden=True)
 	async def slots(self, ctx, bet: int = None):

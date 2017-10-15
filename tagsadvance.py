@@ -7,7 +7,24 @@ class Tags:
 	def __init__(self, bot: commands.Bot):
 		self.bot = bot
 
-	@commands.command(hidden=True)
+	@commands.group(invoke_without_command=True, pass_context=True, aliases=['tags'])
+	async def tag(self, ctx, nameoftag: str = None):
+		if nameoftag == None:
+			emb = discord.Embed(colour=0xff0c00)
+			emb.add_field(name='\U0000274c Error', value='Tag name is required')
+			await ctx.send(embed=emb)
+		else:
+			tageodict = {}
+			with open('tags.json', 'r') as f:
+				tageodict = json.load(f)
+			if nameoftag in tageodict[str(ctx.guild.id)][0]:
+				await ctx.send(tageodict[str(ctx.guild.id)][0][nameoftag]["content"])
+			else:
+				emb = discord.Embed(colour=0xff0c00)
+				emb.add_field(name='\U0000274c Error', value="Tag doesn't exist")
+				await ctx.send(embed=emb)
+
+	@tag.command(hidden=True)
 	@commands.has_permissions(administrator=True)
 	async def setupserver(self, ctx):
 		holderdict = {}
@@ -25,7 +42,7 @@ class Tags:
 			emb.add_field(name='Status', value="Server has been setup")
 			await ctx.send(embed=emb)
 
-	@commands.command(hidden=True, aliases=['createtag', 'tagcreate'])
+	@tag.command(hidden=True, aliases=['createtag', 'tagcreate', 'create'])
 	async def maketag(self, ctx, tagname: str = None, *, tagcontent: str = None):
 		prefixdict = {}
 		with open('tags.json', 'r') as f:
@@ -43,32 +60,49 @@ class Tags:
 			emb.add_field(name='\U0000274c Error', value='Tag exists')
 			await ctx.send(embed=emb)
 		else:
-			prefixdict[str(ctx.guild.id)] = [{tagname: {"author_id": str(ctx.author.id), "content": tagcontent, "aliases": [], "uses": "2"}}]
+			prefixdict[str(ctx.guild.id)] = [{tagname: {"author_id": str(ctx.author.id), "content": tagcontent, "aliases": [], "uses": "0"}}]
 			with open('tags.json', 'w') as f:
 				json.dump(prefixdict, f)
 			emb = discord.Embed(colour=0xC500FF)
 			emb.add_field(name='Status', value=tagname + " is now a new tag!")
 			await ctx.send(embed=emb)
 
-	@commands.command(hidden=True, aliases=['usetag'])
-	async def tag(self, ctx, nameoftag: str = None):
-		if nameoftag == None:
+	@tag.command(hidden=True, aliases=['change'])
+	async def edit(self, ctx, tagname: str = None, *, tagcontent: str = None):
+		prefixdict = {}
+		with open('tags.json', 'r') as f:
+			prefixdict = json.load(f)
+		if tagname == None:
 			emb = discord.Embed(colour=0xff0c00)
 			emb.add_field(name='\U0000274c Error', value='Tag name is required')
 			await ctx.send(embed=emb)
+		elif tagcontent == None:
+			emb = discord.Embed(colour=0xff0c00)
+			emb.add_field(name='\U0000274c Error', value='Tag content is required')
+			await ctx.send(embed=emb)
+		elif prefixdict[str(ctx.guild.id)][0][tagname]["author_id"] != str(ctx.author.id):
+			emb = discord.Embed(colour=0xff0c00)
+			emb.add_field(name='\U0000274c Error', value="Tag doesn't belong to you")
+			await ctx.send(embed=emb)
 		else:
-			tageodict = {}
-			with open('tags.json', 'r') as f:
-				tageodict = json.load(f)
-			if nameoftag in tageodict[str(ctx.guild.id)][0]:
-				await ctx.send(tageodict[str(ctx.guild.id)][0][nameoftag]["content"])
-			else:
-				aemb = discord.Embed(colour=0xff0c00)
-				emb.add_field(name='\U0000274c Error', value="Tag doesn't exist")
-				await ctx.send(embed=emb)
+			prefixdict[str(ctx.guild.id)] = [{tagname: {"author_id": str(ctx.author.id), "content": tagcontent, "aliases": [], "uses": "0"}}]
+			with open('tags.json', 'w') as f:
+				json.dump(prefixdict, f)
+			emb = discord.Embed(colour=0xC500FF)
+			emb.add_field(name='Status', value=tagname + " has been edited!")
+			await ctx.send(embed=emb)
 
-	@commands.command(hidden=True, aliases=['tagdelete', 'removetag', 'tagremove'])
-	async def deletetag(self, ctx, nameoftag: str = None):
+	@tag.command(hidden=True, aliases=['usetag'])
+	async def help(self, ctx):
+		emb = discord.Embed(title='\U0001f3a3 Prestige Tags', colour=0xC500FF)
+		emb.add_field(name='$tag setup', value='Setup tags on your server', inline=False)
+		emb.add_field(name='$tag create <tagname> <content>', value='Create a new tag', inline=False)
+		emb.add_field(name='$tag edit <tagname> <content>', value='Edit an existing tag', inline=False)
+		emb.add_field(name='$tag delete <tagname>', value='Delete a tag', inline=False)
+		await ctx.send(embed=emb)
+
+	@tag.command(hidden=True, aliases=['tagdelete', 'removetag', 'tagremove', 'remove'])
+	async def delete(self, ctx, nameoftag: str = None):
 		if nameoftag == None:
 			emb = discord.Embed(colour=0xff0c00)
 			emb.add_field(name='\U0000274c Error', value='Tag name is required')
@@ -94,8 +128,8 @@ class Tags:
 				emb.add_field(name='\U0000274c Error', value="Tag doen't exist")
 				await ctx.send(embed=emb)
 
-	@commands.command(hidden=True)
-	async def testtag(self, ctx):
+	@tag.command(hidden=True)
+	async def test(self, ctx):
 		holderdictio = {}
 		with open('tags.json', 'r') as f:
 			holderdictio = json.load(f)
