@@ -66,7 +66,7 @@ class Name:
 			print("3) Give server channel ID")
 			channelid = welcome_channel.id
 			with open('welcome.json', 'w') as f:
-				holder = json.load(f)
+				json.dump(f)
 			print("4) Write to file")
 			emb = discord.Embed(colour=0xC500FF)
 			emb.add_field(name='Message', value=message, inline=False)
