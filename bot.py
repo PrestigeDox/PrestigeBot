@@ -72,4 +72,4 @@ async def on_guild_join(nameGuild):
 	with open('tags.json', 'w') as f:
 		json.dump(holderdict, f)
 
-bot.run("MzY2MjY4OTU0ODgyMjExODQw.DLqpsA.ePEIv4EwnGDyFWyRzJmkUaJd4JU")
+bot.run("TOKEN")
