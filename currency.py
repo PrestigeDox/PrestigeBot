@@ -344,8 +344,7 @@ class Currency:
 					   '\U0001f365',
 					   '\U0001f421',
 					   '\U0001f4ce',
-					   '\U0001f480',
-					   '\U000023f9')
+					   '\U0001f480')
 
 		if user == None:
 			fish = holder[str(ctx.author.id)]["fish"]
@@ -570,7 +569,7 @@ class Currency:
 			emb.add_field(name='Amount of \U0001f421', value=blowfish, inline=False)
 			emb.add_field(name='Amount of \U0001f4ce', value=paperclip, inline=False)
 			emb.add_field(name='Amount of \U0001f480', value=skull, inline=False)
-			await ctx.send(embed=emb)
+			await ctx.send(embed=emb, delete_after=300)
 
 	@commands.command(hidden=True)
 	async def slots(self, ctx, bet: int = None):
