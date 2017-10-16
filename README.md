@@ -2,6 +2,12 @@
 
 ![N|Solid](https://camo.githubusercontent.com/038f2a572f5794d309cac13100376f239dfe73e2/687474703a2f2f666f7274686562616467652e636f6d2f696d616765732f6261646765732f6d6164652d776974682d707974686f6e2e737667)
 
+<div align="center">
+    <p> 
+        <a href="https://discord.gg/pmQSbAd"><img src="https://discordapp.com/api/guilds/365893884053553162/widget.png?style=banner2" alt="" /></a>
+    </p>
+</div>
+
 I created this bot to help server owners manage and entertain their members! Feel free to use this code to setup your own branch of my bot or go ahead and add the bot to your server using the invite link below! This project is not my main priority but I will always keep updating it and adding new feautres in. If you need any help message me on my Discord which is also below!
 
 [Invite Link](https://discordapp.com/oauth2/authorize?client_id=366268954882211840&scope=bot&permissions=2134207671)
