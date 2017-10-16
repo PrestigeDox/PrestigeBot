@@ -4,6 +4,12 @@
 
 <div align="center">
     <p> 
+       <img src="https://camo.githubusercontent.com/038f2a572f5794d309cac13100376f239dfe73e2/687474703a2f2f666f7274686562616467652e636f6d2f696d616765732f6261646765732f6d6164652d776974682d707974686f6e2e737667" alt="" />
+    </p>
+</div>
+
+<div align="center">
+    <p> 
         <a href="https://discord.gg/pmQSbAd"><img src="https://discordapp.com/api/guilds/365893884053553162/widget.png?style=banner2" alt="" /></a>
     </p>
 </div>
